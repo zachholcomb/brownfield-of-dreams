@@ -16,9 +16,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    token = auth_hash['credentials']['token']
+    github_user = auth_hash['info']['nickname']
+    github_id = auth_hash['uid'].to_i
+    current_user.update(token: token, github_user: github_user, github_id: github_id)
+    redirect_to dashboard_path
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:email, :first_name, :last_name, :password)
+  end
+
+  def auth_hash
+    @auth_hash ||= request.env['omniauth.auth']
   end
 end

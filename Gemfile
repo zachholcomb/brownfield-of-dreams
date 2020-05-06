@@ -22,6 +22,8 @@ gem 'figaro'
 gem 'factory_bot_rails'
 gem 'faker'
 gem 'active_model_serializers'
+gem 'omniauth'
+gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'will_paginate'
 gem 'acts-as-taggable-on', '~> 6.0'
@@ -41,6 +43,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'chromedriver-helper'
 end
 
 group :development do
