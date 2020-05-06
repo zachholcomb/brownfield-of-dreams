@@ -19,5 +19,18 @@ describe "An admin visting create new tutorials page" do
     expect(current_path).to eq("/tutorials/#{new_tutorial.id}")
     expect(page).to have_content("Successfully created tutorial.")
   end
+
+  scenario "cannot create a new tutorial without correct information" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit "/admin/tutorials/new"
+
+    fill_in 'tutorial[title]', with: ""
+    fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
+    fill_in 'tutorial[thumbnail]', with: 9
+    click_on 'Save'
+    expect(page).to have_content("Tutorial not created: Title can't be blank and Thumbnail must be a valid URL")
+    expect(find_field('Description').value).to eq "In these videos, I teach you how to play basic scales."
+  end
 end
 
