@@ -3,7 +3,11 @@ class Admin::TutorialsController < Admin::BaseController
     @tutorial = Tutorial.find(params[:id])
   end
 
-  def create; end
+  def create
+    @tutorial = Tutorial.create(tutorial_create_params)
+    flash[:success] = "Successfully created tutorial." if @tutorial.save
+    redirect_to tutorial_path(@tutorial)
+  end
 
   def new
     @tutorial = Tutorial.new
@@ -24,6 +28,10 @@ class Admin::TutorialsController < Admin::BaseController
   end
 
   private
+
+  def tutorial_create_params
+    params.require(:tutorial).permit(:title, :description, :thumbnail)
+  end
 
   def tutorial_params
     params.require(:tutorial).permit(:tag_list)
