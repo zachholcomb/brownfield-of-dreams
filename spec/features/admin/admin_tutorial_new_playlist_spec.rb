@@ -31,7 +31,7 @@ describe "An admin visiting create new tutorials page" do
     click_link "Import Youtube Playlist"
     fill_in "Playlist", with: "PLLNZ36qP29I7xrabeFtg184WiEQl0QS6_"
 
-    click_on 'Save Tutorial and Import Playlist'
+    click_on 'Save'
     expect(Tutorial.count).to eq(1)
     new_tutorial = Tutorial.last
 
