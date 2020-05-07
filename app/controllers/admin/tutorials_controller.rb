@@ -42,7 +42,7 @@ class Admin::TutorialsController < Admin::BaseController
   def tutorial_check_creation(tutorial)
     if tutorial.save
       flash[:success] = "Successfully created tutorial.
-      #{view_context.link_to 'View it here.', tutorial_path(tutorial)}"
+      #{view_context.link_to('View it here.', tutorial_path(tutorial))}"
       redirect_to admin_dashboard_path
     else
       flash[:error] = "Tutorial not created: #{tutorial.errors
