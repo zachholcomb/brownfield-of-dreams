@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'vister can create an account', :js do
   it ' visits the home page' do
-    email = 'jimbob@aol.com'
+    email = 'jimbob2@aol.com'
     first_name = 'Jim'
     last_name = 'Bob'
     password = 'password'
@@ -18,11 +18,11 @@ describe 'vister can create an account', :js do
 
     expect(current_path).to eq(new_user_path)
 
-    fill_in 'user[email]', with: email
-    fill_in 'user[first_name]', with: first_name
-    fill_in 'user[last_name]', with: last_name
-    fill_in 'user[password]', with: password
-    fill_in 'user[password_confirmation]', with: password
+    fill_in :email, with: email
+    fill_in :first_name, with: first_name
+    fill_in :last_name, with: last_name
+    fill_in :password, with: password
+    fill_in :password_confirmation, with: password
 
     click_on'Create Account'
 
