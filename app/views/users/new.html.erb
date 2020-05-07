@@ -1,30 +1,28 @@
 <div class="user-login">
   <main>
 <h4>Register</h4>
-  <section>
-    <%= form_for @user do |form| %>
-      <div >
-        <%= form.label :email %>
-        <%= form.email_field :email, class: "block col-12 field" %>
-      </div>
-      <div >
-        <%= form.label :first_name %>
-        <%= form.text_field :first_name, class: "block col-12 field" %>
-      </div>
-      <div>
-        <%= form.label :last_name %>
-        <%= form.text_field :last_name, class: "block col-12 field" %>
-      </div>
-      <div>
-        <%= form.label :password %>
-        <%= form.password_field :password, class: "block col-12 field" %>
-      </div>
-      <div>
-        <%= form.label :password_confirmation %>
-        <%= form.password_field :password_confirmation, class: "block col-12 field" %>
-      </div>
-      <%= form.submit 'Create Account', class: "mt2 btn btn-primary mb1 bg-teal" %>
-    <% end %>
-  </section>
-  </main>
-</div>
+<section>
+  <%= form_tag :users do %>
+    <div >
+      <%= label_tag :email %>
+      <%= email_field_tag :email, class: "block col-12 field" %>
+    </div>
+    <div >
+      <%= label_tag :first_name %>
+      <%= text_field_tag :first_name, class: "block col-12 field" %>
+    </div>
+    <div>
+      <%= label_tag :last_name %>
+      <%= text_field_tag :last_name, class: "block col-12 field" %>
+    </div>
+    <div>
+      <%= label_tag :password %>
+      <%= password_field_tag :password, class: "block col-12 field" %>
+    </div>
+    <div>
+      <%= label_tag :password_confirmation %>
+      <%= password_field_tag :password_confirmation, class: "block col-12 field" %>
+    </div>
+    <%= submit_tag 'Create Account', class: "mt2 btn btn-primary mb1 bg-teal" %>
+  <% end %>
+</section>

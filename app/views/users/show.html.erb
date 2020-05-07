@@ -1,7 +1,8 @@
 <section class="dashboard-main">
   <h1> <%= current_user.first_name %>'s Dashboard </h1>
-
-  <p><%= link_to "Connect to Github", "/auth/github", class: "github" %><p>
+  <% unless current_user.token %>
+    <p><%= link_to "Connect to Github", "/auth/github", class: "github" %></p>
+  <% end %>
   <%= button_to 'Log Out', logout_path, method: 'delete', class: "btn btn-primary mb1 bg-teal" %>
   <h3>Account Details</h3>
   <ul>
@@ -10,5 +11,33 @@
   </ul>
   <section>
     <h1>Bookmarked Segments</h1>
+  </section>
+
+  <section>
+    <h1>Github</h1>
+    <% unless current_user.token %>
+      <p>Connect to Github for more information.</p>
+    <% else %>
+      <h3>Repositories</h3>
+      <section>
+        <% search_results.repos.each do |repo| %>
+          <p><%= link_to repo.name, repo.link %></p>
+        <% end %>
+      </section>
+
+      <h3>Followers</h3>
+      <section>
+        <% search_results.followers.each do |follower| %>
+          <p><%= link_to follower.name, follower.link %></p>
+        <% end %>
+      </section>
+
+      <h3>People You Follow</h3>
+      <section>
+        <% search_results.followings.each do |following| %>
+          <p><%= link_to following.name, following.link %></p>
+        <% end %>
+      </section>
+    <% end %>
   </section>
 </section>
