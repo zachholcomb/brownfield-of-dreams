@@ -4,15 +4,15 @@ class GithubService
     @username = username
   end
 
-  def get_repos
+  def repos
     get_json('repos')[0..4]
   end
 
-  def get_followers
+  def followers
     get_json('followers')
   end
 
-  def get_followings
+  def followings
     get_json('following')
   end
 
@@ -27,6 +27,6 @@ class GithubService
 
   def get_json(url)
     response = conn.get(url)
-    json = JSON.parse(response.body, symbolize_names: true)
+    JSON.parse(response.body, symbolize_names: true)
   end
 end
