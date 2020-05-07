@@ -36,7 +36,7 @@ describe "An admin visiting create new tutorials page" do
     new_tutorial = Tutorial.last
 
     expect(current_path).to eq('/admin/dashboard')
-    expect(page).to have_content('Successfully created tutorial. View it here.')
+    expect(page).to have_content('Successfully created tutorial.')
 
     click_link 'View it here.'
     expect(current_path).to eq("/tutorials/#{new_tutorial.id}")
