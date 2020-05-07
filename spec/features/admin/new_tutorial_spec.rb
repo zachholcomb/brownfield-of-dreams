@@ -16,8 +16,10 @@ describe "An admin visting create new tutorials page" do
     expect(Tutorial.count).to eq(1)
     new_tutorial = Tutorial.last
 
+    expect(current_path).to eq("/admin/dashboard")
+    expect(page).to have_content("Successfully created tutorial. View it here.")
+    click_on "View it here."
     expect(current_path).to eq("/tutorials/#{new_tutorial.id}")
-    expect(page).to have_content("Successfully created tutorial.")
   end
 
   scenario "cannot create a new tutorial without correct information" do
