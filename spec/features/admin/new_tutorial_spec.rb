@@ -8,10 +8,12 @@ describe "An admin visting create new tutorials page" do
 
     visit "/admin/tutorials/new"
 
-    fill_in 'tutorial[title]', with: "How to Play Piano"
-    fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
-    fill_in 'tutorial[thumbnail]', with: "https://i.ytimg.com/vi/yfDJ-OAIADo/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLALlh19sNew-eYkQpHTvtnCdhdgXg"
-    click_on 'Save'
+    within "#new-tutorial-form" do
+      fill_in 'tutorial[title]', with: "How to Play Piano"
+      fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
+      fill_in 'tutorial[thumbnail]', with: "https://i.ytimg.com/vi/yfDJ-OAIADo/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLALlh19sNew-eYkQpHTvtnCdhdgXg"
+      click_on 'Save'
+    end
 
     expect(Tutorial.count).to eq(1)
     new_tutorial = Tutorial.last
@@ -27,12 +29,16 @@ describe "An admin visting create new tutorials page" do
 
     visit "/admin/tutorials/new"
 
-    fill_in 'tutorial[title]', with: ""
-    fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
-    fill_in 'tutorial[thumbnail]', with: 9
-    click_on 'Save'
+    within "#new-tutorial-form" do
+      fill_in 'tutorial[title]', with: ""
+      fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
+      fill_in 'tutorial[thumbnail]', with: 9
+      click_on 'Save'
+    end
     expect(page).to have_content("Tutorial not created: Title can't be blank and Thumbnail must be a valid URL")
-    expect(find_field('Description').value).to eq "In these videos, I teach you how to play basic scales."
+    within "#new-tutorial-form" do
+      expect(find_field('Description').value).to eq "In these videos, I teach you how to play basic scales."
+    end
   end
 end
 

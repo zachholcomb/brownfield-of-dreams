@@ -24,14 +24,17 @@ describe "An admin visiting create new tutorials page" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
     visit "/admin/tutorials/new"
-    fill_in 'tutorial[title]', with: "How to Play Piano"
-    fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
-    fill_in 'tutorial[thumbnail]', with: "https://i.ytimg.com/vi/yfDJ-OAIADo/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLALlh19sNew-eYkQpHTvtnCdhdgXg"
-  
+   
     click_link "Import Youtube Playlist"
-    fill_in "Playlist", with: "PLLNZ36qP29I7xrabeFtg184WiEQl0QS6_"
 
-    click_on 'Save'
+    within "#import-playlist-form" do
+      fill_in 'tutorial[title]', with: "How to Play Piano"
+      fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
+      fill_in 'tutorial[thumbnail]', with: "https://i.ytimg.com/vi/yfDJ-OAIADo/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLALlh19sNew-eYkQpHTvtnCdhdgXg"
+      fill_in "Playlist", with: "PLLNZ36qP29I7xrabeFtg184WiEQl0QS6_"
+    end
+   
+    click_on 'Import Tutorial'
     expect(Tutorial.count).to eq(1)
     new_tutorial = Tutorial.last
 
@@ -41,11 +44,11 @@ describe "An admin visiting create new tutorials page" do
     click_link 'View it here.'
     expect(current_path).to eq("/tutorials/#{new_tutorial.id}")
 
-    expect(first(".show-link")).to eq("Synth Wizards Trailer")
-    expect(last(".show-link").to eq("Synth Wizards Episode 9: Holy Grail: The Yamaha CS-80"))
+    expect(page).to have_link("Synth Wizards trailer")
+    expect(page).to have_link("Synth Wizards Episode 9: Holy Grail: The Yamaha CS-80")
 
     within ".title-bookmark" do
-      expect(page).to have_content("Synth Wizards Trailer")
+      expect(page).to have_content("Synth Wizards trailer")
     end
   end
 end
