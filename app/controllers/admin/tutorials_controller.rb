@@ -3,7 +3,10 @@ class Admin::TutorialsController < Admin::BaseController
     @tutorial = Tutorial.find(params[:id])
   end
 
-  def create; end
+  def create
+    @tutorial = Tutorial.create(tutorial_create_params)
+    tutorial_check_creation(@tutorial)
+  end
 
   def new
     @tutorial = Tutorial.new
@@ -25,7 +28,27 @@ class Admin::TutorialsController < Admin::BaseController
 
   private
 
+  def tutorial_create_params
+    params.require(:tutorial).permit(:title,
+                                     :description,
+                                     :thumbnail,
+                                     :playlist_id)
+  end
+
   def tutorial_params
     params.require(:tutorial).permit(:tag_list)
+  end
+
+  def tutorial_check_creation(tutorial)
+    if tutorial.save
+      flash[:success] = "Successfully created tutorial.
+      #{view_context.link_to('View it here.', tutorial_path(tutorial))}"
+      redirect_to admin_dashboard_path
+    else
+      flash[:error] = "Tutorial not created: #{tutorial.errors
+                                                       .full_messages
+                                                       .to_sentence}"
+      render :new
+    end
   end
 end
