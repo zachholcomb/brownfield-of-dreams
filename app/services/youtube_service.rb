@@ -6,9 +6,12 @@ class YoutubeService
   end
 
   def playlist_info(id)
-    params = { part: 'contentDetails', playlistId: id, pageToken: '' }
+    params = { part: 'snippet,contentDetails',
+               playlistId: id,
+               pageToken: '',
+               maxResults: 50 }
 
-    get_playlist_video_ids('youtube/v3/playlistItems', params)
+    get_playlist_video('youtube/v3/playlistItems', params)
   end
 
   private
@@ -18,24 +21,17 @@ class YoutubeService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def get_playlist_video_ids(url, params)
-    video_ids = []
-    response = conn.get(url, params)
-    parsed_response = JSON.parse(response.body, symbolize_names: true)
-    parsed_response[:items].each do |item|
-      video_ids << item[:contentDetails][:videoId]
-    end
-    until parsed_response[:nextPageToken].nil?
+  def get_playlist_video(url, params)
+    video_info = []
+    loop do
+      parsed_response = get_json(url, params)
       params[:pageToken] = parsed_response[:nextPageToken]
-      response = conn.get(url, params)
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
       parsed_response[:items].each do |item|
-        video_ids << item[:contentDetails][:videoId]
+        video_info << item
       end
-      params[:pageToken] = parsed_response[:nextPageToken]
+      break if parsed_response[:nextPageToken].nil?
     end
-    require 'pry'; binding.pry
-    video_ids
+    video_info.flatten
   end
 
   def conn
