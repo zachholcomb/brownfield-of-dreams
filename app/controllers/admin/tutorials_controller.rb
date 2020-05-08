@@ -5,9 +5,6 @@ class Admin::TutorialsController < Admin::BaseController
 
   def create
     @tutorial = Tutorial.create(tutorial_create_params)
-    if tutorial_create_params[:playlist_id]
-      playlists(tutorial_create_params[:playlist_id])
-    end
     tutorial_check_creation(@tutorial)
   end
 
@@ -53,9 +50,5 @@ class Admin::TutorialsController < Admin::BaseController
                                                        .to_sentence}"
       render :new
     end
-  end
-
-  def playlists(playlist_id)
-    playlist = YouTube::Playlist.by_id(playlist_id)
   end
 end
