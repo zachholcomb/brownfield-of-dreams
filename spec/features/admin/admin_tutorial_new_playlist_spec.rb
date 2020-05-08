@@ -51,4 +51,25 @@ describe "An admin visiting create new tutorials page" do
       expect(page).to have_content("Synth Wizards trailer")
     end
   end
+
+  scenario "can add a playlist with over 50 items" do
+    admin = create(:admin)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+    visit "/admin/tutorials/new"
+   
+    click_link "Import Youtube Playlist"
+
+    within "#import-playlist-form" do
+      fill_in 'tutorial[title]', with: "How to Play Piano"
+      fill_in 'tutorial[description]', with: "In these videos, I teach you how to play basic scales."
+      fill_in 'tutorial[thumbnail]', with: "https://i.ytimg.com/vi/yfDJ-OAIADo/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&amp;rs=AOn4CLALlh19sNew-eYkQpHTvtnCdhdgXg"
+      fill_in "Playlist", with: "PLlk5QLvONKj6agKXh3yx_O24lwOcYkOqf"
+    end
+
+    click_on 'Import Tutorial'
+    expect(Tutorial.count).to eq(1)
+    new_tutorial = Tutorial.last
+    expect(new_tutorial.videos.length).to eq(73)
+  end
 end
