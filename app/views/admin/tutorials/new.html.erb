@@ -1,31 +1,37 @@
-<h2>New Tutorial</h2>
-<%= form_for [:admin, @tutorial] do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title, class: "block col-4 field" %>
-  <%= f.label :description %>
-  <%= f.text_area :description, class: "block col-4 field"  %>
-  <%= f.label :thumbnail %>
-  <%= f.text_field :thumbnail, class: "block col-4 field"  %>
+<div id="new-tutorial-form">
+  <h2>New Tutorial</h2>
+  <%= form_for [:admin, @tutorial] do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "block col-4 field" %>
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "block col-4 field"  %>
+    <%= f.label :thumbnail %>
+    <%= f.text_field :thumbnail, class: "block col-4 field"  %>
 
-  <h3>Videos</h3>
+    <h3>Videos</h3>
 
-  <%= f.fields_for :videos do |builder| %>
-    <%= f.label :youtube_url %>
-    <%= f.text_field :video_id, class: "block col-4 field" %>
+    <%= f.fields_for :videos do |builder| %>
+      <%= f.label :youtube_url %>
+      <%= f.text_field :video_id, class: "block col-4 field" %>
+    <% end %>
+    <%= f.submit "Save", class: "mt2 btn btn-primary mb1 bg-teal" %>
   <% end %>
-
+</div>
   <div data-controller="tutorials">
     <%= link_to 'Import Youtube Playlist', "#", "data-action" => "click->tutorials#showPlaylistForm", class: "video-position-submit btn btn-outline", id: @tutorial.id %>
   </div>
 
   <div class="mt1" id="import-playlist-form">
-    <h3>New Playlist</h3>
-    <%= f.fields_for :playlist do |builder| %>
+    <h3>Import New Playlist</h3>
+    <%= form_for [:admin, @tutorial], :url => url_for(:controller =>'tutorial_import', :action => 'create') do |f| %>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "block col-4 field" %>
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "block col-4 field"  %>
+      <%= f.label :thumbnail %>
+      <%= f.text_field :thumbnail, class: "block col-4 field"  %>
       <%= f.label :playlist_id, class: "block" %>
       <%= f.text_field :playlist_id, class: "field block"%>
+      <%= f.submit "Import Tutorial", class: "mt2 btn btn-primary mb1 bg-teal"%>
     <% end %>
   </div>
-  
-  <%= f.submit "Save", class: "mt2 btn btn-primary mb1 bg-teal" %>
-<% end %>
-
