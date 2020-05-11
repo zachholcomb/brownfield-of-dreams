@@ -5,6 +5,16 @@ require File.expand_path('../../config/environment', __FILE__)
 
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'webmock/rspec'
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/cassettes'
+  config.hook_into :webmock
+  config.filter_sensitive_data("<YOUTUBE API KEY>") { ENV['YOUTUBE_API_KEY']}
+  config.allow_http_connections_when_no_cassette = true
+end
+
 
 ActiveRecord::Migration.maintain_test_schema!
 
