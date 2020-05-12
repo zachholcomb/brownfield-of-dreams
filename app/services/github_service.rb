@@ -5,28 +5,27 @@ class GithubService
   end
 
   def repos
-    get_json('repos')[0..4]
+    get_json('repos', @token)[0..4]
   end
 
   def followers
-    get_json('followers')
+    get_json('followers', @token)
   end
 
   def followings
-    get_json('following')
+    get_json('following', @token)
   end
 
   private
 
   def conn
-    Faraday.new(url: "https://api.github.com/users/#{@username}/") do |req|
-      req.params['token']
+    Faraday.new(url: "https://api.github.com/user/") do |req|
       req.adapter Faraday.default_adapter
     end
   end
 
-  def get_json(url)
-    response = conn.get(url)
+  def get_json(url, token)
+    response = conn.get(url, access_token: token)
     JSON.parse(response.body, symbolize_names: true)
   end
 end
