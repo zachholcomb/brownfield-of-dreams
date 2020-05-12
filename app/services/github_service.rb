@@ -14,7 +14,7 @@ class GithubService
 
   def followings
     get_json("user/following?access_token=#{@token}")
-  end 
+  end
 
   def get_user(username)
     get_json("/users/#{username}")
@@ -23,7 +23,7 @@ class GithubService
   private
 
   def conn
-    Faraday.new(url: "https://api.github.com") do |req|
+    Faraday.new(url: 'https://api.github.com') do |req|
       req.params['token']
       req.adapter Faraday.default_adapter
     end
