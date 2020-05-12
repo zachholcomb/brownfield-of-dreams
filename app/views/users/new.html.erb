@@ -5,23 +5,23 @@
   <%= form_tag :users do %>
     <div >
       <%= label_tag :email %>
-      <%= email_field_tag :email, class: "block col-12 field" %>
+      <%= email_field_tag :email %>
     </div>
     <div >
       <%= label_tag :first_name %>
-      <%= text_field_tag :first_name, class: "block col-12 field" %>
+      <%= text_field_tag :first_name %>
     </div>
     <div>
       <%= label_tag :last_name %>
-      <%= text_field_tag :last_name, class: "block col-12 field" %>
+      <%= text_field_tag :last_name %>
     </div>
     <div>
       <%= label_tag :password %>
-      <%= password_field_tag :password, class: "block col-12 field" %>
+      <%= password_field_tag :password %>
     </div>
     <div>
       <%= label_tag :password_confirmation %>
-      <%= password_field_tag :password_confirmation, class: "block col-12 field" %>
+      <%= password_field_tag :password_confirmation %>
     </div>
     <%= submit_tag 'Create Account', class: "mt2 btn btn-primary mb1 bg-teal" %>
   <% end %>
