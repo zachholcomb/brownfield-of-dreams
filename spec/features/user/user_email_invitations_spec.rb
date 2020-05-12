@@ -8,17 +8,23 @@ describe "A logged in user" do
 
   scenario "sees a link to invite people by email" do
     visit '/dashboard'
-    expect(page).to have_link('Send an Invite')
+    expect(page).to have_button('Send an Invite')
     
-    click_link 'Send an Invite'
+    click_button 'Send an Invite'
     expect(current_path).to eq('/invite')
   end
 
   scenario "can send a link to invite someone by email" do
+    valid_response = File.read('spec/fixtures/github_username.json')
+    stub_request(:get, "https://api.github.com/users/zachholcomb").to_return(status: 200, body: valid_response)
     visit '/dashboard'
-    click_link 'Send an Invite'
-    fill_in "Github Handle",	with: "zachholcomb" 
+    click_button 'Send an Invite'
+    
+    expect(current_path).to eq('/invite')
+    
+    fill_in :github_handle,	with: "zachholcomb" 
     click_on 'Send Invite'
+
     expect(current_path).to eq('/dashboard')
     expect(page).to have_content('Successfully sent invite!')
   end
