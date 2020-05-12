@@ -28,4 +28,18 @@ describe "A logged in user" do
     expect(current_path).to eq('/dashboard')
     expect(page).to have_content('Successfully sent invite!')
   end
+
+  scenario "cannot send a link to an invalid github handle" do
+    no_email_response = File.read('spec/fixtures/github_no_email.json')
+    stub_request(:get, "https://api.github.com/users/zachholcomb").to_return(status:200, body: no_email_response)
+
+    visit '/dashboard'
+    click_on "Send an Invite"
+
+    fill_in :github_handle, with: "zachholcomb"
+    click_on 'Send Invite'
+
+    expect(current_path).to eq('/dashboard')
+    expect(page).to have_content("The Github user you selected doesn't have an email address associated with their account.")
+  end
 end
