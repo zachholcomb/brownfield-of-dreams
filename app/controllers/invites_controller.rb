@@ -16,7 +16,7 @@ class InvitesController < ApplicationController
   end
 
   def invite_email_paths(user_data)
-    if user_data[:email]
+    if !user_data[:email].nil?
       info = { inviter: current_user.github_user, invitee: user_data[:login] }
       InviterMailer.invite(info, user_data[:email]).deliver_now
       flash[:success] = 'Successfully sent invite!'
