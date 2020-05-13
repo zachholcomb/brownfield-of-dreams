@@ -16,7 +16,7 @@ describe "A logged in user" do
 
   scenario "can send a link to invite someone by email" do
     valid_response = File.read('spec/fixtures/github_username.json')
-    stub_request(:get, "https://api.github.com/users/zachholcomb").to_return(status: 200, body: valid_response)
+    stub_request(:get, "https://api.github.com/users/zachholcomb?access_token=").to_return(status: 200, body: valid_response)
     visit '/dashboard'
     click_button 'Send an Invite'
     
@@ -31,7 +31,7 @@ describe "A logged in user" do
 
   scenario "cannot send a link to an invalid github handle" do
     no_email_response = File.read('spec/fixtures/github_no_email.json')
-    stub_request(:get, "https://api.github.com/users/zachholcomb").to_return(status:200, body: no_email_response)
+    stub_request(:get, "https://api.github.com/users/zachholcomb?access_token=").to_return(status:200, body: no_email_response)
 
     visit '/dashboard'
     click_on "Send an Invite"

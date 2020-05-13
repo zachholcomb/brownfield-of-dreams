@@ -15,4 +15,13 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   enum role: { default: 0, admin: 1 }
   has_secure_password
+
+  def bookmarked_videos
+    Video.select('videos.*, tutorials.id as tutorial_id')
+         .joins(:tutorial)
+         .joins(:user_videos)
+         .where(user_videos: { user_id: id })
+         .order(:tutorial_id)
+         .order(:position)
+  end
 end
