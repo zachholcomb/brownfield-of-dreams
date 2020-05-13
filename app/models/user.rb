@@ -20,6 +20,7 @@ class User < ApplicationRecord
     Video.select('videos.*, tutorials.id as tutorial_id')
          .joins(:tutorial)
          .joins(:user_videos)
+         .where(user_videos: { user_id: id })
          .order(:tutorial_id)
          .order(:position)
   end
