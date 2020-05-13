@@ -10,8 +10,11 @@
     <li> <%= current_user.first_name  %> <%= current_user.last_name %> </li>
     <li> <%= current_user.email%> </li>
   </ul>
-  <section>
+  <section class="bookmarked-segments">
     <h1>Bookmarked Segments</h1>
+    <% current_user.bookmarked_videos.each do |video| %>
+      <p><%= video.title %> from <%= video.tutorial.title %></p>
+    <% end %>
   </section>
 
   <section>
