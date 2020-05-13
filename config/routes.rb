@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post '/friendships/:friend_id', to: 'friendships#create'
+
   get '/auth/github'
   get '/auth/github/callback', to: "users#update"
 
