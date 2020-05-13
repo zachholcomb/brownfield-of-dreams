@@ -40,9 +40,18 @@ describe 'A registered user' do
     video2 = create(:video, title: "How to Play Piano", tutorial: tutorial2, position: 2)
     video3 = create(:video, title: "How to Make a Mojito", tutorial: tutorial2, position: 1)
     video4 = create(:video, title: "Let's Count to 5", tutorial: tutorial2)
+
+    user1 = create(:user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user1)
+
+    visit "/tutorials/#{tutorial2.id}"
+    click_on(video4.title)
+    click_on("Bookmark")
     
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit "/dashboard"
 
     visit "/tutorials/#{tutorial.id}"
     click_on 'Bookmark'
@@ -60,6 +69,7 @@ describe 'A registered user' do
       expect(page).to have_content("#{video1.title} from #{tutorial.title}")
       expect(page).to have_content("#{video2.title} from #{tutorial2.title}")
       expect(page).to have_content("#{video3.title} from #{tutorial2.title}")
+      expect(page).to_not have_content("#{video4.title} from #{tutorial2.title}")
       expect("#{video3.title} from #{tutorial2.title}").to appear_before("#{video2.title} from #{tutorial2.title}", only_text: true)
     end
   end
