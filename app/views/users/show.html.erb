@@ -30,8 +30,8 @@
       </section>
 
       <h3>Followers</h3>
-      <section>
-        <% unless current_user.token %>
+      <section class='followers'>
+        <% if current_user.token %>
           <% search_results.followers.each do |follower| %>
             <% if follower.user? %>
               <p><%= link_to follower.name, follower.link %> |
@@ -46,7 +46,7 @@
 
       <h3>People You Follow</h3>
       <section>
-        <% unless current_user.token %>
+        <% if current_user.token %>
           <% search_results.followings.each do |following| %>
             <% if following.user? %>
               <p><%= link_to following.name, following.link %> |
@@ -62,7 +62,9 @@
   </section>
 
   <h3>Friends</h3>
-  <% current_user.friends.each do |friend| %>
-    <p><%= friend.github_user %></p>
-  <% end %>
+    <section class='friends'>
+      <% current_user.friends.each do |friend| %>
+        <p><%= friend.github_user %></p>
+      <% end %>
+    </section>
 </section>
