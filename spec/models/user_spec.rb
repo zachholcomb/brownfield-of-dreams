@@ -27,6 +27,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'class_methods' do
+    it "set_defaults" do
+      user = create(:user)
+      expect(user.status).to eq('Pending')
+    end
+  end
+
   describe 'instance_methods' do
     it "bookmarked_videos" do
       user = create(:user)      
