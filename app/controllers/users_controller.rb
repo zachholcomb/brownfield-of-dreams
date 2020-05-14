@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     if user.save
       session[:user_id] = user.id
       flash[:success] = "Logged in as #{params[:email]}"
+      registration_email(user)
       redirect_to dashboard_path
     else
       flash[:error] = 'Username already exists'
@@ -44,5 +45,11 @@ class UsersController < ApplicationController
 
   def auth_hash
     @auth_hash ||= request.env['omniauth.auth']
+  end
+
+  def registration_email(user)
+    account = user[:first_name]
+    email = user[:email]
+    RegisterMailer.register(account, email).deliver_now
   end
 end
