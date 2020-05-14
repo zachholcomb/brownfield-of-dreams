@@ -63,7 +63,7 @@
 
   <h3>Friends</h3>
     <section class='friends'>
-      <% current_user.friends.each do |friend| %>
+      <% current_user.friend_list(current_user.id).each do |friend| %>
         <p><%= friend.github_user %></p>
       <% end %>
     </section>
