@@ -9,6 +9,8 @@ RSpec.describe User, type: :model do
 
   describe 'relationships' do
     it { should have_many(:user_videos).dependent(:destroy)}
+    it { should have_many(:friendships)}
+    it { should have_many(:friends).through(:friendships)}
   end
 
   describe 'roles' do
@@ -41,6 +43,15 @@ RSpec.describe User, type: :model do
       UserVideo.create!(user: user, video: video3)
       UserVideo.create!(user: user, video: video4)
       expect(user.bookmarked_videos).to eq([video1, video4, video3])
+    end
+
+    it "friend_list" do
+      user = create(:user) 
+      user2 = create(:user) 
+      user3 = create(:user) 
+      Friendship.create(user_id: user.id, friend_id: user2.id)
+      Friendship.create(user_id: user.id, friend_id: user3.id)
+      expect(user.friend_list(user.id)).to eq([user2, user3])
     end
   end
 end
