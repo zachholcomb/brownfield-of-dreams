@@ -21,8 +21,10 @@ describe 'As a user' do
 
     visit '/user/activate'
     expect(page).to have_content("Thank you! Your account is now activated.")
-
+    
     visit '/dashboard'
+    user = User.last
     expect(page).to have_content('Status: Active')
+    expect(user.status).to eq('Active')
   end
 end
