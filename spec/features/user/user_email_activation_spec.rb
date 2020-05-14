@@ -11,12 +11,18 @@ describe 'As a user' do
     fill_in :password, with: '1234'
     fill_in :password_confirmation, with: '1234'
     click_on 'Create Account'
-    
+
     expect(current_path).to eq('/dashboard')
     expect(page).to have_content('Logged in as zachholcombmusic@gmail.com')
 
     user = User.last
     expect(user.status).to eq('Pending')
     expect(page).to have_content('This account has not yet been activated. Please check your email.')
+
+    visit '/user/activate'
+    expect(page).to have_content("Thank you! Your account is now activated.")
+
+    visit '/dashboard'
+    expect(page).to have_content('Status: Active')
   end
 end
