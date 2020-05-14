@@ -8,7 +8,7 @@ RSpec.describe InviterMailer, type: :mailer do
       email = InviterMailer.invite(info, email_address)
       expect(email.from).to eq(['no-reply@brownfield-team.com'])
       expect(email.to).to eq(['kirbyDD@example.com'])
-      expect(email.subject).to eq("#{info[:invitee]} wants you to join Turing Tutorials!")
+      expect(email.subject).to eq("#{info[:inviter]} wants you to join Turing Tutorials!")
     end
 
     it "renders the body" do
