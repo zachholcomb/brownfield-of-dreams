@@ -48,8 +48,8 @@ class UsersController < ApplicationController
   end
 
   def registration_email(user)
-    account = user[:first_name]
+    info = { account: user[:first_name]}
     email = user[:email]
-    RegisterMailer.register(account, email).deliver_now
+    RegisterMailer.register(info, email).deliver_now
   end
 end
