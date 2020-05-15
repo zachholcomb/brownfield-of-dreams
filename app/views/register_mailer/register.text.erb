@@ -1,5 +1,5 @@
 <% if Rails.env.production? %>
-  Visit <%= link_to 'here', '/https://dreams-brownfield.herokuapp.com/user/activate' %> to activate your account.
+  Visit <%= link_to 'here', 'https://dreams-brownfield.herokuapp.com/user/activate' %> to activate your account.
 <% else %>
     Visit <%= link_to 'here', 'localhost:3000/user/activate' %> to activate your account.
 <% end %>
