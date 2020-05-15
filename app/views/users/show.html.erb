@@ -1,4 +1,7 @@
 <section class="dashboard-main">
+  <% if current_user.status == 'Pending' %>
+    <p>This account has not yet been activated. Please check your email.</p>
+  <% end %>
   <h1> <%= current_user.first_name %>'s Dashboard </h1>
   <% unless current_user.token %>
     <p><%= link_to "Connect to Github", "/auth/github", class: "github" %></p>
