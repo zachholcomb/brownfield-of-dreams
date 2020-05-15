@@ -33,35 +33,41 @@
       </section>
 
       <h3>Followers</h3>
-      <section>
-        <% search_results.followers.each do |follower| %>
-          <% if follower.user? %>
-            <p><%= link_to follower.name, follower.link %> |
-              <%= button_to "Add Friend", "/friendships/#{follower.user?.id}", method: :post %>
-            </p>
-          <% else %>
-            <p><%= link_to follower.name, follower.link %></p>
+      <section class='followers'>
+        <% if current_user.token %>
+          <% search_results.followers.each do |follower| %>
+            <% if follower.user? %>
+              <p><%= link_to follower.name, follower.link %> |
+                <%= button_to "Add Friend", "/friendships/#{follower.user?.id}", method: :post %>
+              </p>
+            <% else %>
+              <p><%= link_to follower.name, follower.link %></p>
+            <% end %>
           <% end %>
         <% end %>
       </section>
 
       <h3>People You Follow</h3>
-      <section>
-        <% search_results.followings.each do |following| %>
-          <% if following.user? %>
-            <p><%= link_to following.name, following.link %> |
-              <%= button_to "Add Friend", "/friendships/#{following.user?.id}", method: :post %>
-            </p>
-          <% else %>
-            <p><%= link_to following.name, following.link %></p>
-          <% end %>
+      <section class='following'>
+        <% if current_user.token %>
+          <% search_results.followings.each do |following| %>
+            <% if following.user? %>
+              <p><%= link_to following.name, following.link %> |
+                <%= button_to "Add Friend", "/friendships/#{following.user?.id}", method: :post %>
+              </p>
+            <% else %>
+              <p><%= link_to following.name, following.link %></p>
+              <% end %>
+            <% end %>
+          </section>
         <% end %>
-      </section>
-    <% end %>
+      <% end %>
   </section>
 
   <h3>Friends</h3>
-  <% current_user.friends.each do |friend| %>
-    <p><%= friend.github_user %></p>
-  <% end %>
+    <section class='friends'>
+      <% current_user.friend_list(current_user.id).each do |friend| %>
+        <p><%= friend.github_user %></p>
+      <% end %>
+    </section>
 </section>
