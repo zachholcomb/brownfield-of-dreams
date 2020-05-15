@@ -45,7 +45,7 @@
       </section>
 
       <h3>People You Follow</h3>
-      <section>
+      <section class='following'>
         <% if current_user.token %>
           <% search_results.followings.each do |following| %>
             <% if following.user? %>
